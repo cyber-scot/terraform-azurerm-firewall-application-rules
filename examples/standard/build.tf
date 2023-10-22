@@ -48,55 +48,39 @@ module "firewall" {
   management_ip_configuration = {} # Enables force tunnel mode
 }
 
-module "firewall_rules" {
-  source = "cyber-scot/firewall-network-rules/azurerm"
+module "application_rules" {
+  source = "cyber-scot/firewall-application-rules/azurerm"
 
-  rg_name       = module.firewall.firewall_rg_name
   firewall_name = module.firewall.firewall_name
+  rg_name       = module.rg.rg_name
 
-  network_rule_collections = [
+  application_rule_collections = [
     {
-      name     = "network-rules"
+      name     = "app-rules"
       action   = "Allow"
       priority = 100
       rules = [
         {
-          name                  = "AllowHTTP"
-          protocols             = ["TCP"]
-          description           = "Allow HTTP traffic"
-          source_addresses      = ["10.0.0.0/16"]
-          source_ip_groups      = []
-          destination_addresses = ["0.0.0.0/0"]
-          destination_ports     = ["80"]
-          destination_ip_groups = []
-          destination_fqdns     = []
-        },
-        {
-          name                  = "AllowHTTPS"
-          protocols             = ["TCP"]
-          description           = "Allow HTTPS traffic"
-          source_addresses      = ["10.0.0.0/16"]
-          source_ip_groups      = []
-          destination_addresses = ["0.0.0.0/0"]
-          destination_ports     = ["443"]
-          destination_ip_groups = []
-          destination_fqdns     = []
-        },
-        {
-          name                  = "AllowDNS"
-          protocols             = ["UDP"]
-          description           = "Allow DNS traffic"
-          source_addresses      = ["10.0.0.0/16"]
-          source_ip_groups      = []
-          destination_addresses = ["0.0.0.0/0"]
-          destination_ports     = ["53"]
-          destination_ip_groups = []
-          destination_fqdns     = []
+          name             = "AllowWebTraffic"
+          description      = "Allow HTTP and HTTPS traffic to specific websites"
+          source_addresses = ["10.0.0.0/16"]
+          target_fqdns     = ["example.com", "example.org"]
+          protocol = [
+            {
+              port = "80"
+              type = "Http"
+            },
+            {
+              port = "443"
+              type = "Https"
+            }
+          ]
         }
       ]
-    },
+    }
   ]
 }
+
 
 
 
