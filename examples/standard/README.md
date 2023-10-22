@@ -51,25 +51,49 @@ module "firewall" {
 }
 
 module "firewall_rules" {
-  source = "cyber-scot/firewall-nat-rules/azurerm"
+  source = "../../"
 
   rg_name       = module.firewall.firewall_rg_name
   firewall_name = module.firewall.firewall_name
 
-  nat_rule_collections = [
+  network_rule_collections = [
     {
-      name     = "dnat-rules"
-      action   = "Dnat"
+      name     = "network-rules"
+      action   = "Allow"
       priority = 100
       rules = [
         {
-          name                  = "DNAT-HTTP"
+          name                  = "AllowHTTP"
           protocols             = ["TCP"]
+          description           = "Allow HTTP traffic"
           source_addresses      = ["10.0.0.0/16"]
+          source_ip_groups      = []
+          destination_addresses = ["0.0.0.0/0"]
           destination_ports     = ["80"]
-          destination_addresses = [module.firewall.firewall_data_public_ip_address]
-          translated_address    = "10.0.1.4"
-          translated_ports      = "8080"
+          destination_ip_groups = []
+          destination_fqdns     = []
+        },
+        {
+          name                  = "AllowHTTPS"
+          protocols             = ["TCP"]
+          description           = "Allow HTTPS traffic"
+          source_addresses      = ["10.0.0.0/16"]
+          source_ip_groups      = []
+          destination_addresses = ["0.0.0.0/0"]
+          destination_ports     = ["443"]
+          destination_ip_groups = []
+          destination_fqdns     = []
+        },
+        {
+          name                  = "AllowDNS"
+          protocols             = ["UDP"]
+          description           = "Allow DNS traffic"
+          source_addresses      = ["10.0.0.0/16"]
+          source_ip_groups      = []
+          destination_addresses = ["0.0.0.0/0"]
+          destination_ports     = ["53"]
+          destination_ip_groups = []
+          destination_fqdns     = []
         }
       ]
     },
@@ -88,16 +112,16 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.77.0 |
-| <a name="provider_external"></a> [external](#provider\_external) | 2.3.1 |
-| <a name="provider_http"></a> [http](#provider\_http) | 3.4.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_external"></a> [external](#provider\_external) | n/a |
+| <a name="provider_http"></a> [http](#provider\_http) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_firewall"></a> [firewall](#module\_firewall) | cyber-scot/firewall/azurerm | n/a |
-| <a name="module_firewall_rules"></a> [firewall\_rules](#module\_firewall\_rules) | cyber-scot/firewall-nat-rules/azurerm | n/a |
+| <a name="module_firewall_rules"></a> [firewall\_rules](#module\_firewall\_rules) | ../../ | n/a |
 | <a name="module_network"></a> [network](#module\_network) | cyber-scot/network/azurerm | n/a |
 | <a name="module_rg"></a> [rg](#module\_rg) | cyber-scot/rg/azurerm | n/a |
 
