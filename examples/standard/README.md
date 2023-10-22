@@ -51,7 +51,7 @@ module "firewall" {
 }
 
 module "firewall_rules" {
-  source = "../../"
+  source = "cyber-scot/firewall-network-rules/azurerm"
 
   rg_name       = module.firewall.firewall_rg_name
   firewall_name = module.firewall.firewall_name
@@ -112,16 +112,16 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
-| <a name="provider_external"></a> [external](#provider\_external) | n/a |
-| <a name="provider_http"></a> [http](#provider\_http) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.77.0 |
+| <a name="provider_external"></a> [external](#provider\_external) | 2.3.1 |
+| <a name="provider_http"></a> [http](#provider\_http) | 3.4.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_firewall"></a> [firewall](#module\_firewall) | cyber-scot/firewall/azurerm | n/a |
-| <a name="module_firewall_rules"></a> [firewall\_rules](#module\_firewall\_rules) | ../../ | n/a |
+| <a name="module_firewall_rules"></a> [firewall\_rules](#module\_firewall\_rules) | cyber-scot/firewall-network-rules/azurerm | n/a |
 | <a name="module_network"></a> [network](#module\_network) | cyber-scot/network/azurerm | n/a |
 | <a name="module_rg"></a> [rg](#module\_rg) | cyber-scot/rg/azurerm | n/a |
 

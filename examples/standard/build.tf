@@ -49,7 +49,7 @@ module "firewall" {
 }
 
 module "firewall_rules" {
-  source = "../../"
+  source = "cyber-scot/firewall-network-rules/azurerm"
 
   rg_name       = module.firewall.firewall_rg_name
   firewall_name = module.firewall.firewall_name
