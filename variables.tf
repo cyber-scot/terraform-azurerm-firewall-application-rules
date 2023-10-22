@@ -3,8 +3,8 @@ variable "firewall_name" {
   description = "The name of the Azure firewall this rule collection should be added to"
 }
 
-variable "nat_rule_collections" {
-  description = "A list of NAT rule collections, each containing a list of NAT rules."
+variable "network_rule_collections" {
+  description = "A list of network rule collections, each containing a list of network rules."
   type = list(object({
     name     = string
     action   = string
@@ -12,14 +12,13 @@ variable "nat_rule_collections" {
     rules = list(object({
       name                  = string
       description           = optional(string)
-      destination_addresses = list(string)
+      destination_addresses = optional(list(string))
       destination_ports     = list(string)
+      destination_ip_groups = optional(list(string))
       protocols             = list(string)
       source_addresses      = optional(list(string))
       source_ip_groups      = optional(list(string))
-      translated_address    = optional(string)
-      translated_fqdn       = optional(string)
-      translated_ports      = number
+      destination_fqdns     = optional(list(string))
     }))
   }))
   default = []

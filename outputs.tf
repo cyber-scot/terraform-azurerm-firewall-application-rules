@@ -1,19 +1,19 @@
-output "nat_rule_collections_output" {
-  description = "The NAT rule collections created by the module."
-  value       = azurerm_firewall_nat_rule_collection.nat_rules
+output "network_rule_collections_output" {
+  description = "The network rule collections created by the module."
+  value       = azurerm_firewall_network_rule_collection.network_rules
 }
 
-output "nat_rule_ids" {
-  description = "The IDs of the NAT rule collections."
-  value       = { for k, v in azurerm_firewall_nat_rule_collection.nat_rules : k => v.id }
+output "network_rule_ids" {
+  description = "The IDs of the network rule collections."
+  value       = { for k, v in azurerm_firewall_network_rule_collection.network_rules : k => v.id }
 }
 
-output "nat_rule_names" {
-  description = "The names of the NAT rule collections."
-  value       = { for k, v in azurerm_firewall_nat_rule_collection.nat_rules : k => v.name }
+output "network_rule_names" {
+  description = "The names of the network rule collections."
+  value       = { for k, v in azurerm_firewall_network_rule_collection.network_rules : k => v.name }
 }
 
-output "nat_rules" {
-  description = "Details of the NAT rules within each collection."
-  value       = { for k, v in azurerm_firewall_nat_rule_collection.nat_rules : k => v.rule }
+output "network_rules" {
+  description = "Details of the network rules within each collection."
+  value       = { for k, v in azurerm_firewall_network_rule_collection.network_rules : k => v.rule }
 }
