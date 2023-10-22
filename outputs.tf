@@ -17,3 +17,4 @@ output "application_rules" {
   description = "Details of the application rules within each collection."
   value       = { for k, v in azurerm_firewall_application_rule_collection.application_rules : k => v.rule }
 }
+cd
